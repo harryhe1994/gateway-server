@@ -16,6 +16,13 @@ spring:
             - StripPrefix=1 #切割请求，去除/order/
         #TODO: 添加Inventory Service的反向代理
 
+        - id: inventory-service #服务唯一ID标识
+                  uri: lb://inventory-service # 注册中心的服务id
+                  predicates:
+                    - Path=/inventory/** #请求转发
+                  filters:
+                    - StripPrefix=1 #切割请求，去除/inventory/
+
         - id: header_route
           uri: http://baidu.com
           predicates:
@@ -25,7 +32,7 @@ spring:
       probability: 1.0
 
   zipkin:
-    base-url: http://zipkin.team-a.cloud.school.thoughtworks.cn
+    base-url: http://zipkin.team-l.cloud.school.thoughtworks.cn
 
 logging:
   level:
